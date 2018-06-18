@@ -11,7 +11,7 @@ class ProductItem extends Component {
     this.onDelete = this.onDelete.bind(this);
     this.onEdit = this.onEdit.bind(this);
     this.onEditSubmit = this.onEditSubmit.bind(this);
-
+    this.handleMoves = this.handleMoves.bind(this);
   }
   onDelete() {
     const { onDelete, name } = this.props;
@@ -32,12 +32,27 @@ class ProductItem extends Component {
     //changing isEdit back to false after we have submitted 
   }
 
+  handleMoves(e) {
+
+    const theList = document.getElementById("list")
+    
+    let div = e.target.parentNode;
+    
+    if (e.target.className === 'moveup') {
+      theList.insertBefore(div, div.previousElementSibling);
+    }
+    if (e.target.className === 'movedown') {
+      theList.insertBefore(div.nextElementSibling, div);
+    }
+
+  }
+
   render() {
     const {name, price} = this.props;
 
     return (
-      <div className="products-box">
-      { this.state.isEdit ? 
+      <div>
+      { this.state.isEdit ?   
         (
           <div>
             <form onSubmit={this.onEditSubmit}>
@@ -48,14 +63,15 @@ class ProductItem extends Component {
           </div>
         )
         : (
-          <div>
-          <span>{name}</span> 
-          {` | `}
-           <span>{price}</span>
-          {` | `}
+          <div id="list">
+          <li>
+            <span>{name}</span>
+            <span>{price}</span>
           <button onClick={this.onEdit}>Edit Product</button>
-          {` | `}
           <button onClick={this.onDelete}>Delete Product</button>
+          <button className="moveup" onClick={this.handleMoves}>Up</button>
+          <button className="movedown" onClick={this.handleMoves}>Down</button>
+          </li>
           </div>
         )
       }

@@ -3,3 +3,11 @@
   border: 2px solid black;
   margin: 50px;
 }
+
+#list li:first-child .moveup {
+  display: none;
+} 
+
+#list li:last-child .movedown {
+  display: none;
+}
